@@ -32,7 +32,6 @@ Cleanup
     Create Directory    ${pdf_folder}
     Create Directory    ${output_folder}
 
-# +
 *** Keywords ***
 Ask user for the CSV File
     # Create Form     Please provide Orders file link    
@@ -47,14 +46,12 @@ Ask user for the CSV File
     Log     ${response}
     [Return]    ${response.input_file_url}
 
+*** Keywords ***
 Download input csv file
     ${input_url}=      Ask user for the CSV File
     Download    url=${input_url}  target_file=${input_files}   overwrite=True
     ${input_table}=    Read table from CSV    path=${input_files}    header=True
     [Return]    ${input_table}
-    
-
-# -
 
 *** Keywords ***
 Open the robot order website
@@ -162,14 +159,12 @@ Display the success dialog
 *** Tasks ***
 Orders robots from RobotSpareBin Industries Inc.
     Cleanup
-    Download input csv file
+    #Download input csv file
 
     Log    ${URL}
     Log    ${USER_NAME}
-        
-    Open the robot order website
-    
     ${orders}=   Download input csv file
+    Open the robot order website
     FOR    ${row}    IN    @{orders}
         Close the annoying model
         Fill the form    ${row}
